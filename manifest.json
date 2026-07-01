@@ -1,0 +1,9 @@
+{
+  "name": "N3 Cấp Tốc",
+  "short_name": "N3 Cấp Tốc",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#101827",
+  "description": "Web app ôn JLPT N3 cấp tốc bằng Story Sprint, 3-trong-1, Hán Việt và quiz."
+}
