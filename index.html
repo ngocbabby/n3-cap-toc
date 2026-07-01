@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>N3 Cấp Tốc</title>
+  <meta name="theme-color" content="#101827" />
+  <meta name="description" content="N3 Cấp Tốc - web app ôn JLPT N3 bằng Story Sprint, 3-trong-1, Hán Việt, quiz và ôn lỗi." />
+  <style>
+    :root{--bg:#0f172a;--card:#111c33;--card2:#17233d;--text:#eef2ff;--muted:#a8b3cf;--line:#263452;--pri:#7c3aed;--pri2:#22c55e;--warn:#f59e0b;--bad:#ef4444;--good:#34d399;--chip:#22304f}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#23345c 0,#0f172a 42%,#070b16 100%);color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.5}.app{max-width:980px;margin:0 auto;padding:18px 14px 88px}.hero{padding:20px 0 12px}.title{font-weight:900;font-size:32px;letter-spacing:-.04em;margin:0}.sub{color:var(--muted);margin:6px 0 0}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.stat,.card{background:linear-gradient(180deg,var(--card),#0f172a);border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:0 10px 32px rgba(0,0,0,.2)}.stat b{font-size:23px;display:block}.stat span{font-size:12px;color:var(--muted)}.tabs{position:sticky;top:0;z-index:5;background:rgba(15,23,42,.9);backdrop-filter:blur(10px);display:flex;gap:8px;overflow:auto;padding:10px 0}.tab{white-space:nowrap;border:1px solid var(--line);background:#111c33;color:var(--text);border-radius:999px;padding:10px 13px;font-weight:700}.tab.active{background:linear-gradient(90deg,var(--pri),#2563eb);border-color:transparent}.section{display:none}.section.active{display:block}.btn{border:0;border-radius:14px;background:#253557;color:var(--text);padding:12px 14px;font-weight:800;cursor:pointer}.btn.primary{background:linear-gradient(90deg,var(--pri),#2563eb)}.btn.good{background:#166534}.btn.bad{background:#7f1d1d}.btn.warn{background:#854d0e}.btn.full{width:100%;font-size:18px;padding:16px;margin:8px 0}.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.pill{display:inline-flex;gap:6px;align-items:center;background:var(--chip);border:1px solid var(--line);border-radius:999px;padding:6px 10px;color:#cbd5e1;font-size:12px;font-weight:700}.bigjp{font-size:44px;font-weight:900;letter-spacing:.03em;line-height:1.2}.kana{font-size:18px;color:#c4b5fd}.vn{font-size:18px;color:#fef3c7}.muted{color:var(--muted)}.small{font-size:12px}.code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:#0a1020;border:1px solid var(--line);border-radius:8px;padding:2px 7px;color:#a7f3d0}.list{display:grid;gap:10px}.item{background:var(--card2);border:1px solid var(--line);border-radius:16px;padding:13px}.choices{display:grid;gap:9px;margin-top:12px}.choice{border:1px solid var(--line);border-radius:14px;background:#16213a;color:var(--text);text-align:left;padding:13px;font-weight:700}.choice.correct{border-color:var(--good);background:#064e3b}.choice.wrong{border-color:var(--bad);background:#581c1c}.bar{height:8px;background:#1f2a44;border-radius:999px;overflow:hidden}.bar>i{display:block;height:100%;background:linear-gradient(90deg,#22c55e,#7c3aed);width:0}.chapter{border-left:4px solid #7c3aed}.story{white-space:pre-wrap;font-size:17px}.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}.footer{margin-top:25px;color:var(--muted);font-size:12px}@media(max-width:700px){.grid,.two{grid-template-columns:1fr}.title{font-size:27px}.bigjp{font-size:38px}.app{padding-left:12px;padding-right:12px}.tabs{margin-left:-12px;margin-right:-12px;padding-left:12px}.stat{padding:12px}}
+  </style>
+</head>
+<body>
+<div class="app">
+  <header class="hero">
+    <h1 class="title">N3 Cấp Tốc</h1>
+    <p class="sub">Story Sprint + 3-trong-1 + Hán Việt + quiz tự chấm. Dữ liệu được lấy từ repo gốc <b>n3-jlpt-app</b>.</p>
+  </header>
+
+  <div class="grid" id="stats">
+    <div class="stat"><b id="vCount">...</b><span>Từ vựng</span></div>
+    <div class="stat"><b id="kCount">...</b><span>Kanji / từ ghép</span></div>
+    <div class="stat"><b id="gCount">...</b><span>Ngữ pháp</span></div>
+  </div>
+
+  <nav class="tabs" id="tabs">
+    <button class="tab active" data-tab="home">Home</button>
+    <button class="tab" data-tab="story">Story</button>
+    <button class="tab" data-tab="chain">3-trong-1</button>
+    <button class="tab" data-tab="vocab">Từ + câu</button>
+    <button class="tab" data-tab="kanji">Hán Việt</button>
+    <button class="tab" data-tab="grammar">Ngữ pháp</button>
+    <button class="tab" data-tab="quiz">Quiz</button>
+    <button class="tab" data-tab="weak">Ôn lỗi</button>
+  </nav>
+
+  <section id="home" class="section active">
+    <div class="card">
+      <h2>Học cấp tốc theo flow</h2>
+      <button class="btn primary full" onclick="startSprint()">BẮT ĐẦU 5 PHÚT</button>
+      <div class="two">
+        <button class="btn full" onclick="openTab('story')">Đọc Story Sprint</button>
+        <button class="btn full" onclick="openTab('chain')">Học 3-trong-1</button>
+      </div>
+      <p class="muted">Mục tiêu: nhìn chữ Nhật → đoán nhanh → kiểm tra ngay → sai/chậm thì lưu vào Ôn lỗi.</p>
+    </div>
+    <div class="card">
+      <h3>Kiểm kê kiến thức</h3>
+      <div class="list">
+        <div class="item"><span class="code">V001-V<span id="vMax">...</span></span> <b>từ vựng</b> từ VOCAB_DB</div>
+        <div class="item"><span class="code">K001-K<span id="kMax">...</span></span> <b>Kanji / từ ghép Kanji</b> từ KANJI_DB</div>
+        <div class="item"><span class="code">G001-G<span id="gMax">...</span></span> <b>ngữ pháp</b> từ LESSONS</div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Tiến độ đã gặp trong máy này</h3>
+      <div class="list" id="progressBox"></div>
+    </div>
+  </section>
+
+  <section id="story" class="section"><div class="card"><h2>Story Sprint</h2><div class="row"><button class="btn" onclick="prevChapter()">← Chương trước</button><button class="btn primary" onclick="nextChapter()">Chương sau →</button><button class="btn" onclick="quizChapter()">Quiz chương</button></div></div><div id="storyBox"></div></section>
+  <section id="chain" class="section"><div class="card"><h2>3-trong-1</h2><p class="muted">Mỗi trang ghép 1 từ + 1 Kanji/từ ghép + 1 ngữ pháp.</p><div class="row"><button class="btn" onclick="prevChain()">← Trang trước</button><span class="pill" id="chainPage">Trang ...</span><button class="btn primary" onclick="nextChain()">Trang sau →</button></div></div><div id="chainBox"></div></section>
+  <section id="vocab" class="section"><div class="card"><h2>Từ + câu</h2><div class="row"><input id="vSearch" placeholder="Tìm từ / nghĩa" oninput="renderVocab()" style="flex:1;min-width:200px;padding:12px;border-radius:12px;border:1px solid var(--line);background:#0b1222;color:white"><button class="btn" onclick="vPage=Math.max(0,vPage-1);renderVocab()">←</button><span class="pill" id="vPageLabel"></span><button class="btn" onclick="vPage++;renderVocab()">→</button></div></div><div id="vocabBox" class="list"></div></section>
+  <section id="kanji" class="section"><div class="card"><h2>Kanji Hán Việt</h2><div class="row"><button class="btn" onclick="kPage=Math.max(0,kPage-1);renderKanji()">←</button><span class="pill" id="kPageLabel"></span><button class="btn" onclick="kPage++;renderKanji()">→</button></div></div><div id="kanjiBox" class="list"></div></section>
+  <section id="grammar" class="section"><div class="card"><h2>Ngữ pháp theo cụm</h2><div class="row"><button class="btn" onclick="gPage=Math.max(0,gPage-1);renderGrammar()">←</button><span class="pill" id="gPageLabel"></span><button class="btn" onclick="gPage++;renderGrammar()">→</button></div></div><div id="grammarBox" class="list"></div></section>
+  <section id="quiz" class="section"><div class="card"><h2>Quiz 5 phút</h2><div id="quizBox"></div></div></section>
+  <section id="weak" class="section"><div class="card"><h2>Ôn lỗi sai / chậm</h2><button class="btn bad" onclick="clearWeak()">Xóa danh sách lỗi</button></div><div id="weakBox" class="list"></div></section>
+  <div class="footer">N3 Cấp Tốc - web app chạy trong trình duyệt. Có thể bật GitHub Pages để dùng bằng link công khai.</div>
+</div>
+<script>
+const UPSTREAMS=['https://raw.githubusercontent.com/ngocbabby/n3-jlpt-app/main/','https://raw.githubusercontent.com/ngocbabby/n3-jlpt-app/master/'];
+let V=[],K=[],G=[],chapters=[],chainIdx=0,chapterIdx=0,vPage=0,kPage=0,gPage=0,quiz=[],qIdx=0,qStart=0,correct=0,wrong=0;
+const S={seenV:new Set(JSON.parse(localStorage.n3_seenV||'[]')),seenK:new Set(JSON.parse(localStorage.n3_seenK||'[]')),seenG:new Set(JSON.parse(localStorage.n3_seenG||'[]')),weak:JSON.parse(localStorage.n3_weak||'[]')};
+function esc(s){return String(s??'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}
+function pad(n){return String(n).padStart(3,'0')}
+function code(t,i){return t+pad(i+1)}
+function save(){localStorage.n3_seenV=JSON.stringify([...S.seenV]);localStorage.n3_seenK=JSON.stringify([...S.seenK]);localStorage.n3_seenG=JSON.stringify([...S.seenG]);localStorage.n3_weak=JSON.stringify(S.weak.slice(-300));renderProgress()}
+function stripRead(s){return String(s||'').replace(/<rt>.*?<\/rt>/g,'').replace(/<[^>]+>/g,'').replace(/（[ぁ-んァ-ンー\s]+）/g,'').replace(/\([ぁ-んァ-ンー\s]+\)/g,'')}
+function speak(t){const text=stripRead(t); if(!('speechSynthesis' in window)) return alert('Máy/trình duyệt chưa hỗ trợ đọc tiếng Nhật.'); speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(text); u.lang='ja-JP'; u.rate=.9; const vs=speechSynthesis.getVoices(); const ja=vs.find(v=>/ja|japanese/i.test(v.lang+' '+v.name)); if(ja)u.voice=ja; speechSynthesis.speak(u)}
+function openTab(id){document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.tab===id)); if(id==='weak')renderWeak(); if(id==='vocab')renderVocab(); if(id==='kanji')renderKanji(); if(id==='grammar')renderGrammar(); if(id==='chain')renderChain(); if(id==='story')renderStory()}
+document.getElementById('tabs').onclick=e=>{if(e.target.dataset.tab)openTab(e.target.dataset.tab)};
+async function fetchFirst(path){let last; for(const base of UPSTREAMS){try{const r=await fetch(base+path,{cache:'no-store'}); if(r.ok)return await r.text(); last=r.status}catch(e){last=e.message}} throw new Error('Không tải được '+path+' ('+last+')')}
+function grabConst(html,name){const i=html.indexOf('const '+name+' ='); if(i<0) throw new Error('Không thấy '+name); let s=html.slice(i).replace(/^const\s+\w+\s*=\s*/,''); let depth=0,quote=null,out=''; for(let j=0;j<s.length;j++){let c=s[j],p=s[j-1]; out+=c; if(quote){if(c===quote&&p!=='\\')quote=null; continue} if(c==='"'||c==="'"||c==='`'){quote=c;continue} if(c==='['||c==='{')depth++; if(c===']'||c==='}')depth--; if(depth===0&&(c===']'||c==='}'))break} return out}
+async function loadData(){try{const [vh,kh,gh]=await Promise.all([fetchFirst('vocab.html'),fetchFirst('kanji.html'),fetchFirst('n3-grammarnew.html')]); V=JSON.parse(grabConst(vh,'VOCAB_DB')); K=Function('return '+grabConst(kh,'KANJI_DB'))(); const L=Function('return '+grabConst(gh,'LESSONS'))(); G=[]; L.forEach((l,li)=>(l.grammars||[]).forEach((g,gi)=>G.push({...g,lesson:l.title||('Bài '+(li+1)),lessonIndex:li,grammarIndex:gi}))); buildChapters(); initUI();}catch(e){document.body.innerHTML='<div class="app"><div class="card"><h1>Không tải được dữ liệu</h1><p>'+esc(e.message)+'</p><p>Kiểm tra repo gốc hoặc mạng rồi tải lại trang.</p></div></div>'}}
+function buildChapters(){const total=30; chapters=[]; for(let i=0;i<total;i++){const vs=V.slice(i*30, Math.min((i+1)*30,V.length)); const ks=K.slice(i*10, Math.min((i+1)*10,K.length)); const gs=G.slice(i*5, Math.min((i+1)*5,G.length)); chapters.push({i,vs,ks,gs,title:['受験票がない','駅へ急ぐ','コンビニで確認','会社から連絡','雨の日の体調','友達の助言','図書館の規則','忘れ物センター','道を聞く','試験前の夜','会場に着く','総復習'][i]||('N3 Story '+(i+1))});}}
+function initUI(){vCount.textContent=V.length;kCount.textContent=K.length;gCount.textContent=G.length;vMax.textContent=pad(V.length);kMax.textContent=pad(K.length);gMax.textContent=pad(G.length);renderProgress();renderStory();renderChain()}
+function renderProgress(){progressBox.innerHTML=`<div class="item"><b>${S.seenV.size}/${V.length}</b> từ vựng đã gặp</div><div class="item"><b>${S.seenK.size}/${K.length}</b> Kanji đã gặp</div><div class="item"><b>${S.seenG.size}/${G.length}</b> ngữ pháp đã gặp</div><div class="item"><b>${S.weak.length}</b> lỗi sai/chậm đang lưu</div>`}
+function shortSentence(v){const jp=v.kanji||v.kana; if((v.type||'').includes('動'))return jp+'ます。'; if((v.type||'').includes('形'))return jp+'です。'; return 'これは'+jp+'です。'}
+function grammarText(g){return g.meaning||g.mean||g.vn||g.title||g.pattern||''}
+function grammarExample(g){return g.example||g.ex||g.sentence||g.ja||''}
+function renderStory(){const c=chapters[chapterIdx]||chapters[0]; const vtxt=c.vs.slice(0,8).map(x=>x.kanji).join('、'); const gtxt=c.gs.slice(0,2).map(x=>x.pattern||x.title).join('、'); storyBox.innerHTML=`<div class="card chapter"><div class="row"><span class="code">Chương ${c.i+1}/30</span><span class="code">V${pad(c.i*30+1)}-V${pad(Math.min((c.i+1)*30,V.length))}</span><span class="code">K${pad(c.i*10+1)}-K${pad(Math.min((c.i+1)*10,K.length))}</span><span class="code">G${pad(c.i*5+1)}-G${pad(Math.min((c.i+1)*5,G.length))}</span></div><h2>第${c.i+1}章：${esc(c.title)}</h2><p class="story" id="storyText">リンはJLPT N3の試験を受けるために、朝から予定を確認した。\n今日の大切な言葉は「${esc(vtxt)}」だ。\n先生は「${esc(gtxt)}」を使って、短い文を作るように言った。\nリンは分からない言葉を見つけると、すぐ意味を確認して、声に出して読んだ。</p><button class="btn" onclick="speak(document.getElementById('storyText').textContent)">🔊 truyện</button></div><div class="card"><h3>Target chương</h3><div class="row"><span class="pill">${c.vs.length} từ</span><span class="pill">${c.ks.length} Kanji</span><span class="pill">${c.gs.length} ngữ pháp</span></div></div>`}
+function nextChapter(){chapterIdx=Math.min(chapters.length-1,chapterIdx+1);renderStory()} function prevChapter(){chapterIdx=Math.max(0,chapterIdx-1);renderStory()}
+function renderChain(){if(!V.length)return; const i=((chainIdx%V.length)+V.length)%V.length; const v=V[i], k=K[i%K.length], g=G[i%G.length]; chainPage.textContent=`Trang ${i+1}/${V.length}`; S.seenV.add(v.id||i);S.seenK.add(k.k||i);S.seenG.add(g.pattern||i);save(); chainBox.innerHTML=`<div class="card"><div class="row"><span class="code">${code('V',i)}</span><span class="code">${code('K',i%K.length)}</span><span class="code">${code('G',i%G.length)}</span></div><h2>1) Từ vựng</h2><div class="bigjp">${esc(v.kanji)}</div><div class="kana">${esc(v.kana)}</div><div class="vn">${esc(v.vn)}</div><p>${esc(shortSentence(v))}</p><button class="btn" onclick="speak('${esc(v.kanji)}')">🔊 từ</button> <button class="btn" onclick="speak('${esc(shortSentence(v))}')">🔊 câu</button></div><div class="card"><h2>2) Kanji Hán Việt</h2><div class="bigjp">${esc(k.k)}</div><div class="kana">${esc(k.on?.read||k.kun?.read||'')}</div><div class="vn">${esc(k.vn||k.on?.meaning||'')}</div><p><b>Hán Việt:</b> ${esc(k.hv||'')}</p><p class="muted">${esc(k.memo||k.exp||'')}</p><button class="btn" onclick="speak('${esc(k.k)}')">🔊 Kanji</button></div><div class="card"><h2>3) Ngữ pháp</h2><div class="bigjp" style="font-size:30px">${esc(g.pattern||g.title||'')}</div><div class="vn">${esc(grammarText(g))}</div><p><b>Ví dụ:</b> ${esc(grammarExample(g)||'例文を確認しましょう。')}</p><p class="muted">${esc(g.note||g.tip||g.structure||'')}</p><button class="btn" onclick="speak('${esc(grammarExample(g)||g.pattern||'')}')">🔊 ví dụ</button></div>`}
+function nextChain(){chainIdx++;renderChain()} function prevChain(){chainIdx=Math.max(0,chainIdx-1);renderChain()}
+function renderVocab(){const term=(vSearch.value||'').toLowerCase(); let data=V.filter(x=>(x.kanji+x.kana+x.vn).toLowerCase().includes(term)); const per=20, max=Math.max(0,Math.ceil(data.length/per)-1); if(vPage>max)vPage=max; vPageLabel.textContent=`Trang ${vPage+1}/${max+1}`; vocabBox.innerHTML=data.slice(vPage*per,vPage*per+per).map((v,idx)=>`<div class="item"><span class="code">${code('V',V.indexOf(v))}/${V.length}</span><div class="bigjp" style="font-size:30px">${esc(v.kanji)}</div><div class="kana">${esc(v.kana)}</div><div class="vn">${esc(v.vn)}</div><p>${esc(shortSentence(v))}</p><button class="btn" onclick="speak('${esc(v.kanji)}')">🔊 từ</button> <button class="btn" onclick="speak('${esc(shortSentence(v))}')">🔊 câu</button></div>`).join('')}
+function renderKanji(){const per=12,max=Math.max(0,Math.ceil(K.length/per)-1); if(kPage>max)kPage=max; kPageLabel.textContent=`Trang ${kPage+1}/${max+1}`; kanjiBox.innerHTML=K.slice(kPage*per,kPage*per+per).map(k=>`<div class="item"><span class="code">${code('K',K.indexOf(k))}/${K.length}</span><div class="bigjp" style="font-size:34px">${esc(k.k)}</div><div class="kana">${esc(k.on?.read||k.kun?.read||'')}</div><div class="vn">${esc(k.vn||k.on?.meaning||'')}</div><p><b>Hán Việt:</b> ${esc(k.hv||'')}</p><p class="muted">${esc(k.memo||k.exp||'')}</p><button class="btn" onclick="speak('${esc(k.k)}')">🔊</button></div>`).join('')}
+function renderGrammar(){const per=10,max=Math.max(0,Math.ceil(G.length/per)-1); if(gPage>max)gPage=max; gPageLabel.textContent=`Trang ${gPage+1}/${max+1}`; grammarBox.innerHTML=G.slice(gPage*per,gPage*per+per).map(g=>`<div class="item"><span class="code">${code('G',G.indexOf(g))}/${G.length}</span><h3>${esc(g.pattern||g.title||'')}</h3><div class="vn">${esc(grammarText(g))}</div><p><b>Cấu trúc:</b> ${esc(g.structure||'')}</p><p><b>Ví dụ:</b> ${esc(grammarExample(g)||'')}</p><p class="muted">${esc(g.note||g.tip||g.explain||'')}</p><button class="btn" onclick="speak('${esc(grammarExample(g)||g.pattern||'')}')">🔊 ví dụ</button></div>`).join('')}
+function shuf(a){a=[...a]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]} return a}
+function makeVQ(v){const opts=shuf([v.vn,...shuf(V.filter(x=>x.vn!==v.vn)).slice(0,3).map(x=>x.vn)]); return {type:'vocab',code:code('V',V.indexOf(v)),prompt:v.kanji,sub:v.kana,answer:v.vn,opts,explain:shortSentence(v),jp:v.kanji}}
+function makeKQ(k){const ans=k.vn||k.on?.meaning||''; const opts=shuf([ans,...shuf(K.filter(x=>(x.vn||x.on?.meaning)!==ans)).slice(0,3).map(x=>x.vn||x.on?.meaning||'')]); return {type:'kanji',code:code('K',K.indexOf(k)),prompt:k.k,sub:k.hv||k.on?.read||'',answer:ans,opts,explain:k.memo||k.exp||'',jp:k.k}}
+function makeGQ(g){const ans=grammarText(g); const opts=shuf([ans,...shuf(G.filter(x=>grammarText(x)!==ans)).slice(0,3).map(grammarText)]); return {type:'grammar',code:code('G',G.indexOf(g)),prompt:g.pattern||g.title,sub:grammarExample(g)||'',answer:ans,opts,explain:g.note||g.tip||g.structure||'',jp:grammarExample(g)||g.pattern||''}}
+function startSprint(){quiz=shuf([...shuf(V).slice(0,10).map(makeVQ),...shuf(K).slice(0,7).map(makeKQ),...shuf(G).slice(0,8).map(makeGQ)]); qIdx=0;correct=0;wrong=0;openTab('quiz');renderQ()}
+function quizChapter(){const c=chapters[chapterIdx]; quiz=shuf([...c.vs.slice(0,5).map(makeVQ),...c.ks.slice(0,3).map(makeKQ),...c.gs.slice(0,4).map(makeGQ)]); qIdx=0;correct=0;wrong=0;openTab('quiz');renderQ()}
+function renderQ(){const q=quiz[qIdx]; if(!q){quizBox.innerHTML=`<h3>Xong lượt</h3><p>Đúng: <b>${correct}</b> / Sai: <b>${wrong}</b></p><button class="btn primary full" onclick="startSprint()">Làm lượt mới</button><button class="btn full" onclick="openTab('weak')">Ôn lỗi</button>`;save();return} qStart=Date.now(); if(q.type==='vocab')S.seenV.add(q.prompt); if(q.type==='kanji')S.seenK.add(q.prompt); if(q.type==='grammar')S.seenG.add(q.prompt); save(); quizBox.innerHTML=`<div class="row"><span class="code">${q.code}</span><span class="pill">${qIdx+1}/${quiz.length}</span></div><div class="bigjp" style="font-size:38px">${esc(q.prompt)}</div><div class="kana">${esc(q.sub)}</div><button class="btn" onclick="speak('${esc(q.jp)}')">🔊 đọc</button><div class="choices">${q.opts.map(o=>`<button class="choice" onclick="answerQ(this,'${esc(o)}')">${esc(o)}</button>`).join('')}</div><div id="qExplain"></div>`}
+function answerQ(btn,opt){const q=quiz[qIdx], slow=Date.now()-qStart>5000, ok=opt===q.answer; document.querySelectorAll('.choice').forEach(b=>{if(b.textContent===q.answer)b.classList.add('correct')}); if(!ok)btn.classList.add('wrong'); qExplain.innerHTML=`<div class="item" style="margin-top:12px"><b>${ok?'Đúng':'Sai'}${slow?' / Chậm':''}</b><p>${esc(q.explain||'')}</p></div><button class="btn primary full" onclick="qIdx++;renderQ()">Câu tiếp</button>`; if(ok)correct++; else wrong++; if(!ok||slow)S.weak.push({...q,reason:!ok?'Sai':'Chậm'}); save()}
+function renderWeak(){weakBox.innerHTML=S.weak.length?S.weak.slice().reverse().map(w=>`<div class="item"><span class="code">${esc(w.code)}</span> <span class="pill">${esc(w.reason)}</span><h3>${esc(w.prompt)}</h3><p><b>Đáp án:</b> ${esc(w.answer)}</p><p class="muted">${esc(w.explain||'')}</p><button class="btn" onclick="speak('${esc(w.jp||w.prompt)}')">🔊</button></div>`).join(''):'<div class="card">Chưa có lỗi nào.</div>'}
+function clearWeak(){S.weak=[];save();renderWeak()}
+loadData();
+</script>
+</body>
+</html>
